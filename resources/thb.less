@@ -464,3 +464,68 @@
 		background-color: var(--mw-color-neutral-30) !important;
 	}
 }
+
+/* ── 侧栏菜单（Citizen 抽屉）：MenuSidebar 的结构化输出 ───────────────── */
+.thb-menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	&--sub {
+		padding-inline-start: var( --space-md );
+	}
+}
+
+.thb-submenu {
+	&__summary {
+		display: flex;
+		align-items: center;
+		gap: var( --space-xs );
+		padding-inline-end: var( --space-md );
+		cursor: pointer;
+		list-style: none;
+
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		> a {
+			flex: 1;
+			min-width: 0;
+		}
+	}
+
+	&__chevron {
+		flex: none;
+		inline-size: 0.5rem;
+		block-size: 0.5rem;
+		border-inline-end: 2px solid currentColor;
+		border-block-end: 2px solid currentColor;
+		transform: rotate( 45deg );
+		transition: transform var( --transition-hover );
+	}
+
+	&[open] > .thb-submenu__summary .thb-submenu__chevron {
+		transform: rotate( 225deg );
+	}
+}
+
+/* 结构化模式下核心仍会渲染一个空的 <ul>，隐藏掉避免多出空白 */
+.citizen-menu__content > .citizen-menu__content-list:not( :has( li ) ) {
+	display: none;
+}
+
+/* MenuSidebar 注入的菜单树：纯文本条目（不可点击的分组标题）与链接对齐 */
+.thb-menu__item > .thb-menu__label {
+	display: flex;
+	align-items: center;
+	min-block-size: 2.25rem;
+	padding-inline: var(--space-md);
+	color: var(--color-subtle);
+}
+
+.thb-submenu__summary > .thb-menu__label {
+	flex: 1;
+	min-inline-size: 0;
+	padding-inline-end: 0;
+}

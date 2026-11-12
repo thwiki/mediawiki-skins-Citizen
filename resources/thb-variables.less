@@ -453,3 +453,17 @@
 		}
 	}
 }
+
+// ---------------------------------------------------------------------------
+// Layout: standard content width
+// ---------------------------------------------------------------------------
+/* [THBWiki] 正文标准宽度改为 1200px，与旧皮肤（Unicorn/Vampire）一致。
+ * 上游在 skins.citizen.styles/common/features.less 里用
+ * `:root.citizen-feature-custom-width-clientpref-standard` 设 1080px，
+ * 该文件在 skin.less 里晚于本文件加载，故这里加一级 html 提高特异性覆盖；
+ * wide(1600px) / full(100vw) 两个偏好不受影响。 */
+html:root.citizen-feature-custom-width-clientpref-standard {
+	--width-layout: 1200px;
+	// 窄屏下 footer / 页头用 --width-page（上游等于 --width-layout），一起对齐
+	--width-page: 1200px;
+}

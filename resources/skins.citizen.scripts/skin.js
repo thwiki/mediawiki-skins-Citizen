@@ -73,6 +73,9 @@ function initBodyContent(
  * @return {void}
  */
 function main( window ) {
+	// [THBWiki] 登录用户头像（IIFE，require 即执行）
+	require( './thb-userMenu.js' );
+
 	const
 		config = require( './config.json' ),
 		{ createNotifications } = require( './notifications.js' ),

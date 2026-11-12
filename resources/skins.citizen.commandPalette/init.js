@@ -46,7 +46,11 @@ function initApp( overlayEl, options ) {
 	const opts = options || {};
 
 	const recentItemsService = createRecentItems();
-	const searchClient = createRestSearchClient( mw.config.get( 'wgScriptPath' ) );
+	// [THBWiki] 站点把 REST 路径配置成 /rest（$wgRestPath = "$wgScriptPath/rest"），
+	// 不能写死 rest.php；回退到默认路径以兼容未设置 wgRestPath 的站点。
+	const searchClient = createRestSearchClient(
+		mw.config.get( 'wgRestPath' ) || mw.config.get( 'wgScriptPath' ) + '/rest.php'
+	);
 	const paletteRegistry = createPaletteRegistry();
 
 	paletteRegistry.register( namespaceMode );

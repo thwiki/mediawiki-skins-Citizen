@@ -84,13 +84,13 @@ function isRedirectUseful( title, matchedTitle ) {
 }
 
 /**
- * Create a REST search client bound to the given script path.
+ * Create a REST search client bound to the given REST path.
  *
- * @param {string} scriptPath Value of wgScriptPath (e.g. "" or "/w")
+ * @param {string} restPath Value of wgRestPath (e.g. "/rest" or "/w/rest.php")
  * @return {{ fetchByQuery: Function, processQuery: Function }}
  */
-function createRestSearchClient( scriptPath ) {
-	const searchApiUrl = scriptPath + '/rest.php';
+function createRestSearchClient( restPath ) {
+	const searchApiUrl = restPath;
 
 	/**
 	 * Adapt the REST API response to CommandPaletteSearchResponse format.

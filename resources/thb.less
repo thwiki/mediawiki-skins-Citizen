@@ -720,3 +720,17 @@
 	font-weight: var( --font-weight-normal, 400 );
 	line-height: 1.3;
 }
+
+/* [THBWiki] 头像 / 名字 / 头衔整块都可点击：把链接的命中区域扩到整个标题块。
+ * 标题块建立包含块，链接的 ::after 用 inset: 0 覆盖头像与头衔行；
+ * 链接文本仍是用户名，键盘与读屏语义不变。 */
+.citizen-userMenu .citizen-userInfo-title {
+	position: relative;
+}
+
+.citizen-userMenu .citizen-userInfo-title nav.citizen-menu a[href]::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: var( --border-radius-base );
+}

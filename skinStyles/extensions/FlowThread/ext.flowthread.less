@@ -1,0 +1,21 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:FlowThread
+ * Modules: ext.flowthread, ext.flowthread.manage
+ *
+ * 访客评论的插件样式单独放在 skinStyles/extensions 下（皮肤约定）。
+ * 这里只做旧皮肤（Unicorn/Vampire）已有的两件事：圆形头像、悬浮 360° 旋转。
+ * 头像尺寸（50px，嵌套回复 30px）由扩展自带的 assets/common.css 控制。
+ */
+
+.comment-avatar img {
+	border-radius: var(--border-radius-circle, 50%);
+	border: 2px solid var(--border-color-base);
+	transition: transform 0.6s ease;
+	object-fit: cover;
+}
+
+.comment-avatar img:hover {
+	transform: rotate(360deg);
+}

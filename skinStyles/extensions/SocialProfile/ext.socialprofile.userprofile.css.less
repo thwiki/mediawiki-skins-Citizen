@@ -1,0 +1,31 @@
+#profile-top {
+  display: flex;
+  align-items: center;
+  #profile-right {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+#user-page-left {
+  .user-section-heading {
+    display: flex;
+    .user-section-actions {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+    }
+  }
+  .user-section-heading:has(.user-section-actions) {
+    width: calc(100% - 48px);
+  }
+  .user-relationship-container {
+    display: flex;
+  }
+}
+
+#user-page-right {
+  .user-section-heading {
+    display: flex;
+  }
+}

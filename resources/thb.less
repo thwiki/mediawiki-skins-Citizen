@@ -668,10 +668,17 @@
 		}
 	}
 }
-/* 曲目列表（Template:同人专辑曲目 → table.musicTable，Common.css 里 width:100%）
- * Citizen 会把 wikitable 包进 .citizen-overflow-wrapper，并给它 max-width:max-content，
- * 于是 100% 宽度变成「内容宽度」，右侧留一大片空白。这里对 musicTable 取消收缩。
- * 只用 skin 层覆盖，不改站点 CSS / 模板。 */
-.citizen-overflow-wrapper:has( > .citizen-overflow-content > table.musicTable ) {
+/* 站点 Common.css 里声明 width:100% 的表格（作品信息、曲目列表、Staff、翻译表、
+ * 导航盒等），在 Citizen 的 overflow 包装里会因 wrapper 的 max-width:max-content
+ * 被收窄成「内容宽度」，右侧留白。这里对这些表格取消收缩，100% 会按内容列解析。
+ * 只用 skin 层覆盖，不改站点 CSS / 模板；普通 wikitable 仍保持 Citizen 的收缩行为。 */
+.citizen-overflow-wrapper:has( > .citizen-overflow-content > :is(
+	table.doujininfo,
+	table.doujinworklist,
+	table.musicTable,
+	table.stafflist,
+	table.tt-table,
+	table.navbox
+) ) {
 	max-width: none;
 }

@@ -1,0 +1,466 @@
+/**
+ * @file
+ * Styles for the site notice.
+ */
+#siteNotice {
+  font-size: var(--mw-font-size-site-notice);
+  padding: 0;
+
+  div {
+    margin: 0;
+  }
+
+  #localNotice {
+    padding: 10px 0;
+  }
+
+  #scrollDiv {
+    width: 100%;
+    height: 1.5em;
+    line-height: 1.5em;
+    overflow: hidden;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        list-style: none;
+        height: 1.5em;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
+/**
+ * @file
+ * Styles for the page content header.
+ */
+
+@template-cdn: "https://static.thbwiki.cc/template";
+
+.bg-image(@name) {
+  background-image: url("@{template-cdn}/@{name}.png");
+}
+
+.page-content-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 0 1px 0 var(--mw-spacing-small);
+  border-style: solid;
+  border-color: var(--mw-border-color-content);
+  text-align: center;
+  max-width: max-content; // 建议保留这个，300px 会被覆盖
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--mw-background-color-highlight);
+  background-position: -2px center;
+  background-repeat: no-repeat;
+  background-size: 100px;
+
+  &::before {
+    content: "";
+    display: block;
+    height: 90px;
+    justify-content: space-between;
+    width: 90px;
+    flex: 0 0 90px;
+    order: 0;
+  }
+
+  > div {
+    padding: var(--mw-spacing-medium) var(--mw-spacing-small);
+  }
+
+  // --- 边框颜色定义 ---
+  &.soft-type {
+    border-left-color: #fad67d;
+  }
+  &.book-type {
+    border-left-color: #c47dfa;
+  }
+  &.album-type {
+    border-left-color: #7dd5fa;
+  }
+  &.chara-type {
+    border-left-color: #7dfa8f;
+  }
+  &.video-type {
+    border-left-color: #ca7dfa;
+  }
+  &.goods-type {
+    border-left-color: #ffa500;
+  }
+  &.concept-type {
+    border-left-color: #a7abeb;
+  }
+  &.staff-type {
+    border-left-color: #0047ab;
+  }
+  &.spellcard {
+    border-left-color: #ffa500;
+  }
+  &.danmaku {
+    border-left-color: #f56c56;
+  }
+  &.music {
+    border-left-color: #d5fa6d;
+  }
+  &.place {
+    border-left-color: #9999ff;
+  }
+  &.prop {
+    border-left-color: #ff5e00;
+  }
+  &.event {
+    border-left-color: #9999ff;
+  }
+  &.circle {
+    border-left-color: #e16dca;
+  }
+  &.doujin-music {
+    border-left-color: #d5fa6d;
+  }
+  &.lyrics {
+    border-left-color: #57318a;
+  }
+  &.company {
+    border-left-color: #30d5c8;
+  }
+  &.related {
+    border-left-color: #41a0ff;
+  }
+  &.danger {
+    border-left-color: #ff0000;
+  }
+  &.robot {
+    border-left-color: #ff8900;
+  }
+
+  // --- 带特殊宽度的配置 ---
+  &.image {
+    max-width: max-content;
+    border-left-color: #ecb96e;
+    .bg-image(image);
+  }
+  &.sandbox {
+    max-width: max-content;
+    border-left-color: #fad67d;
+    .bg-image(sandbox);
+  }
+  &.smw {
+    max-width: max-content;
+    border-left-color: #7d9efa;
+    .bg-image(smw);
+  }
+
+  // --- 背景图片定义（使用上面定义的 Mixin） ---
+  &.shanghai {
+    .bg-image(shanghai);
+  }
+  &.tasofro {
+    .bg-image(tasofro);
+  }
+
+  &.book-1 {
+    .bg-image(book-1);
+  }
+  &.book-2 {
+    .bg-image(book-2);
+  }
+  &.book-3 {
+    .bg-image(book-3);
+  }
+  &.book-4 {
+    .bg-image(book-4);
+  }
+
+  &.related-doujin {
+    .bg-image(related-doujin);
+  }
+  &.related-game {
+    .bg-image(related-game);
+  }
+  &.related-com {
+    .bg-image(related-com);
+  }
+
+  &.album-1 {
+    .bg-image(album-1);
+  }
+  &.album-2 {
+    .bg-image(album-2);
+  }
+  &.album-3 {
+    .bg-image(album-3);
+  }
+
+  &.character {
+    .bg-image(character);
+  }
+  &.past-character {
+    .bg-image(past-character);
+  }
+  &.spellcard {
+    .bg-image(spellcard);
+  }
+  &.danmaku {
+    .bg-image(danmaku);
+  }
+  &.music {
+    .bg-image(music);
+  }
+  &.place {
+    .bg-image(place);
+  }
+  &.prop {
+    .bg-image(prop);
+  }
+  &.related-character {
+    .bg-image(related-character);
+  }
+  &.non-touhou {
+    .bg-image(non-touhou);
+  }
+  &.event {
+    .bg-image(event);
+  }
+  &.circle {
+    .bg-image(circle);
+  }
+  &.doujin-music {
+    .bg-image(doujin-music);
+  }
+  &.doujinshi {
+    .bg-image(doujinshi);
+  }
+  &.doujin-album {
+    .bg-image(doujin-album);
+  }
+  &.doujin-soft {
+    .bg-image(doujin-soft);
+  }
+  &.doujin-video {
+    .bg-image(doujin-video);
+  }
+  &.lyrics {
+    .bg-image(lyrics);
+  }
+
+  &.goods-1 {
+    .bg-image(goods-1);
+  }
+  &.goods-2 {
+    .bg-image(goods-2);
+  }
+
+  &.dance-video {
+    .bg-image(dance-video);
+  }
+  &.mugen {
+    .bg-image(mugen);
+  }
+  &.doujin-other {
+    .bg-image(doujin-other);
+  }
+  &.doujin-character {
+    .bg-image(doujin-character);
+  }
+  &.doujin-content {
+    .bg-image(doujin-content);
+  }
+  &.change-character {
+    .bg-image(change-character);
+  }
+
+  &.concept-1 {
+    .bg-image(concept-1);
+  }
+  &.concept-2 {
+    .bg-image(concept-2);
+  }
+
+  &.list {
+    .bg-image(list);
+  }
+  &.dialogue {
+    .bg-image(dialogue);
+  }
+  &.omake {
+    .bg-image(omake);
+  }
+  &.company {
+    .bg-image(company);
+  }
+  &.staff {
+    .bg-image(staff);
+  }
+  &.doujin-staff {
+    .bg-image(doujin-staff);
+  }
+  &.related {
+    .bg-image(related);
+  }
+  &.help {
+    .bg-image(help);
+  }
+  &.guide {
+    .bg-image(guide);
+  }
+  &.danger {
+    .bg-image(danger);
+  }
+  &.robot {
+    .bg-image(robot);
+  }
+
+  &.com-related-game {
+    .bg-image(com-related-game);
+  }
+  &.com-game {
+    .bg-image(com-game);
+  }
+  &.com-mobile-game {
+    .bg-image(com-mobile-game);
+  }
+  &.com-book {
+    .bg-image(com-book);
+  }
+  &.com-event {
+    .bg-image(com-event);
+  }
+}
+
+.mw-body h1,
+.mw-body h2,
+.mw-body h3,
+.mw-body h4 {
+  border-bottom: var(--mw-border-width-thick) solid var(--mw-color-secondary-50);
+}
+
+.mw-body h4,
+.mw-body h5,
+.mw-body h6 {
+  font-weight: bold;
+}
+
+.mw-body h3,
+.mw-body h4,
+.mw-body h5,
+.mw-body h6 {
+  line-height: var(--mw-line-height-base);
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.mw-body h1,
+.mw-body-content h1,
+.mw-body-content h2 {
+  margin-bottom: var(--mw-spacing-small);
+  padding: 0;
+  line-height: var(--mw-line-height-heading);
+}
+
+.mw-body h1,
+.mw-body-content h1 {
+  font-size: var(--mw-font-size-heading-1);
+  padding-left: var(--mw-spacing-x-small);
+  clear: left;
+}
+
+.mw-body h1 {
+  margin-top: var(--mw-spacing-medium);
+}
+
+.mw-body h2 {
+  margin-top: var(--mw-spacing-medium);
+  font-size: var(--mw-font-size-heading-2);
+  clear: both;
+  background-image: var(--mw-icon-h2);
+  background-repeat: no-repeat;
+  background-position: left 75%;
+  padding-left: calc(
+    var(--mw-font-size-heading-2) + var(--mw-spacing-2x-small)
+  );
+  background-size: var(--mw-font-size-heading-2);
+}
+
+.mw-body .noclear ~ h2 {
+  clear: none;
+}
+
+.mw-body .allclear ~ h2 {
+  clear: both;
+}
+
+.mw-body h3 {
+  font-size: var(--mw-font-size-heading-3);
+  font-weight: normal;
+  padding-top: 0;
+  margin: var(--mw-spacing-small) 0;
+  background-image: var(--mw-icon-h3);
+  background-repeat: no-repeat;
+  background-position: left 75%;
+  padding-left: calc(
+    var(--mw-font-size-heading-3) + var(--mw-spacing-2x-small)
+  );
+  background-size: var(--mw-font-size-heading-3);
+}
+
+.mw-body h4 {
+  font-size: 18px;
+}
+
+.mw-body h5 {
+  font-size: 16px;
+  border-bottom: var(--mw-border-width-base) solid var(--mw-color-secondary-50);
+}
+
+.mw-body h6 {
+  font-size: 15px;
+  border-bottom: none;
+}
+
+// ---------------------------------------------------------------------------
+// Color utility classes (mixins live in thb-variables.less)
+// ---------------------------------------------------------------------------
+.class-color-end( neutral );
+.class-color( neutral );
+.class-color( primary );
+.class-color( secondary );
+.class-color( info );
+.class-color( success );
+.class-color( warning );
+.class-color( danger );
+
+.class-bg-color-end( neutral );
+.class-bg-color( neutral );
+.class-bg-color( primary );
+.class-bg-color( secondary );
+.class-bg-color( info );
+.class-bg-color( success );
+.class-bg-color( warning );
+.class-bg-color( danger );
+
+.class-bd-color-end( neutral );
+.class-bd-color( neutral );
+.class-bd-color( primary );
+.class-bd-color( secondary );
+.class-bd-color( info );
+.class-bd-color( success );
+.class-bd-color( warning );
+.class-bd-color( danger );
+
+.bg-color-odd-even {
+	&:nth-child(odd) {
+		background-color: var(--mw-color-neutral-10) !important;
+	}
+	&:nth-child(even) {
+		background-color: var(--mw-color-neutral-30) !important;
+	}
+}

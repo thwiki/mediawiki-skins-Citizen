@@ -35,15 +35,15 @@
   }
 }
 
+@thb-cdn: "https://static.thbwiki.cc";
+
 /**
  * @file
  * Styles for the page content header.
  */
 
-@template-cdn: "https://static.thbwiki.cc/template";
-
 .bg-image(@name) {
-  background-image: url("@{template-cdn}/@{name}.png");
+  background-image: url("@{thb-cdn}/template/@{name}.png");
 }
 
 .page-content-header {

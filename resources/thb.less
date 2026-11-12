@@ -531,3 +531,14 @@
 	min-inline-size: 0;
 	padding-inline-end: 0;
 }
+
+/* [THBWiki] 登录用户的头像：替换 Citizen 用户菜单按钮里的通用 userAvatar 图标 */
+.citizen-userMenu .thb-useravatar {
+	display: block;
+	inline-size: var( --size-icon );
+	min-inline-size: var( --size-icon );
+	block-size: var( --size-icon );
+	min-block-size: var( --size-icon );
+	border-radius: 50%;
+	object-fit: cover;
+}

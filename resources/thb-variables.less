@@ -1,0 +1,455 @@
+// THB custom design tokens — the only file where site-wide token changes belong.
+// Loaded by skins.citizen.styles/skin.less right after upstream variables.less.
+
+// ---------------------------------------------------------------------------
+// THB palette (light / dark)
+// ---------------------------------------------------------------------------
+.light-theme-vars {
+  /* Colors */
+  --mw-color-primary-10: hsl(38, 74%, 90%);
+  --mw-color-primary-30: hsl(38, 80%, 81%);
+  --mw-color-primary-50: hsl(38, 87%, 60%);
+  --mw-color-primary-70: hsl(38, 93%, 42%);
+  --mw-color-primary-90: hsl(38, 100%, 28%);
+
+  --mw-color-secondary-10: hsl(309, 100%, 95%);
+  --mw-color-secondary-30: hsl(309, 100%, 91%);
+  --mw-color-secondary-50: hsl(309, 100%, 81%);
+  --mw-color-secondary-70: hsl(309, 60%, 56%);
+  --mw-color-secondary-90: hsl(309, 40%, 27%);
+
+  --mw-color-info-10: hsl(217, 67%, 93%);
+  --mw-color-info-30: hsl(217, 68%, 72%);
+  --mw-color-info-50: hsl(217, 69%, 57%);
+  --mw-color-info-70: hsl(217, 72%, 43%);
+  --mw-color-info-90: hsl(217, 75%, 35%);
+
+  --mw-color-success-10: hsl(124, 66%, 86%);
+  --mw-color-success-30: hsl(126, 62%, 69%);
+  --mw-color-success-50: hsl(125, 58%, 58%);
+  --mw-color-success-70: hsl(125, 42%, 41%);
+  --mw-color-success-90: hsl(125, 40%, 28%);
+
+  --mw-color-warning-10: hsl(48, 90%, 85%);
+  --mw-color-warning-30: hsl(48, 95%, 60%);
+  --mw-color-warning-50: hsl(48, 100%, 42%);
+  --mw-color-warning-70: hsl(48, 100%, 33%);
+  --mw-color-warning-90: hsl(48, 100%, 23%);
+
+  --mw-color-danger-10: hsl(0, 52%, 94%);
+  --mw-color-danger-30: hsl(0, 54%, 79%);
+  --mw-color-danger-50: hsl(0, 55%, 60%);
+  --mw-color-danger-70: hsl(0, 64%, 40%);
+  --mw-color-danger-90: hsl(0, 70%, 29%);
+
+  --mw-color-neutral-0: hsl(0, 0%, 100%);
+  --mw-color-neutral-10: hsl(0, 0%, 95%);
+  --mw-color-neutral-30: hsl(0, 0%, 85%);
+  --mw-color-neutral-50: hsl(0, 0%, 50%);
+  --mw-color-neutral-70: hsl(0, 0%, 35%);
+  --mw-color-neutral-90: hsl(0, 0%, 15%);
+  --mw-color-neutral-100: hsl(0, 0%, 0%);
+}
+
+.dark-theme-vars() {
+  /* Colors */
+  --mw-color-primary-90: hsl(38, 80%, 81%);
+  --mw-color-primary-70: hsl(38, 87%, 60%);
+  --mw-color-primary-50: hsl(38, 93%, 42%);
+  --mw-color-primary-30: hsl(38, 100%, 28%);
+  --mw-color-primary-10: hsl(38, 100%, 15%);
+
+  --mw-color-secondary-90: hsl(0, 54%, 79%);
+  --mw-color-secondary-70: hsl(0, 55%, 60%);
+  --mw-color-secondary-50: hsl(0, 64%, 40%);
+  --mw-color-secondary-30: hsl(0, 70%, 29%);
+  --mw-color-secondary-10: hsl(0, 80%, 16%);
+
+  --mw-color-info-90: hsl(217, 67%, 93%);
+  --mw-color-info-70: hsl(217, 68%, 72%);
+  --mw-color-info-50: hsl(217, 69%, 57%);
+  --mw-color-info-30: hsl(217, 60%, 43%);
+  --mw-color-info-10: hsl(217, 40%, 35%);
+
+  --mw-color-success-90: hsl(124, 66%, 86%);
+  --mw-color-success-70: hsl(126, 62%, 69%);
+  --mw-color-success-50: hsl(125, 58%, 58%);
+  --mw-color-success-30: hsl(125, 42%, 41%);
+  --mw-color-success-10: hsl(125, 40%, 28%);
+
+  --mw-color-warning-90: hsl(48, 90%, 85%);
+  --mw-color-warning-70: hsl(48, 95%, 60%);
+  --mw-color-warning-50: hsl(48, 100%, 42%);
+  --mw-color-warning-30: hsl(48, 100%, 33%);
+  --mw-color-warning-10: hsl(48, 100%, 23%);
+
+  --mw-color-danger-90: hsl(0, 54%, 79%);
+  --mw-color-danger-70: hsl(0, 55%, 60%);
+  --mw-color-danger-50: hsl(0, 64%, 40%);
+  --mw-color-danger-30: hsl(0, 70%, 29%);
+  --mw-color-danger-10: hsl(0, 80%, 16%);
+
+  --mw-color-neutral-100: hsl(0, 0%, 100%);
+  --mw-color-neutral-90: hsl(39, 16%, 80%);
+  --mw-color-neutral-70: hsl(39, 7%, 71%);
+  --mw-color-neutral-50: hsl(39, 4%, 55%);
+  --mw-color-neutral-30: hsl(210, 6%, 33%);
+  --mw-color-neutral-10: hsl(210, 5%, 25%);
+  --mw-color-neutral-0: hsl(210, 3%, 12%);
+}
+
+// 默认亮色
+:root {
+  .light-theme-vars();
+}
+
+// 用户手动选择深色：无条件
+:root.skin-theme-clientpref-night {
+  .dark-theme-vars();
+}
+
+// 用户选择跟随系统 + 系统为深色
+@media (prefers-color-scheme: dark) {
+  :root.skin-theme-clientpref-os {
+    .dark-theme-vars();
+  }
+}
+
+:root {
+	--mw-background-color-content: var(--mw-color-neutral-10);
+	--mw-background-color-highlight: var(--mw-color-neutral-0);
+	--mw-background-color-suppress: var(--mw-color-neutral-30);
+
+	--mw-background-color-navigation: var(--mw-color-neutral-0);
+	--mw-background-color-navigation-active: var(--mw-color-neutral-10);
+	--mw-background-color-search: var(--mw-color-neutral-0);
+
+	--mw-color-base: var(--mw-color-neutral-90);
+	--mw-color-base-suppress: var(--mw-color-neutral-50);
+	--mw-color-base-highlight: var(--mw-color-neutral-100);
+
+	--mw-color-link-base: var(--mw-color-info-70);
+	--mw-color-link-base-active: var(--mw-color-primary-50);
+	--mw-color-link-menu: var(--mw-color-info-50);
+	--mw-color-link-menu-active: var(--mw-color-primary-50);
+	--mw-color-link-new: var(--mw-color-danger-70);
+	--mw-color-link-new-active: var(--mw-color-secondary-50);
+
+	/* Borders and Outlines */
+
+	// Border Color
+	--mw-border-color-content: var(--mw-color-neutral-30);
+	--mw-border-color-highlight: var(--mw-color-neutral-0);
+	--mw-border-color-navigation: var(--mw-color-neutral-30);
+	--mw-border-color-search: var(--mw-color-neutral-30);
+
+	// Border Width
+	--mw-border-width-base: 1px;
+	--mw-border-width-negative: -1px;
+	--mw-border-width-thick: 2px;
+	--mw-border-width-thicker: 3px;
+
+	// Outline Color
+	--mw-outline-color-focus: var(--mw-color-link-menu);
+
+	--mw-spacing-3x-small: 0.125rem; // 2px
+	--mw-spacing-2x-small: 0.25rem; // 4px
+	--mw-spacing-x-small: 0.5rem; // 8px
+	--mw-spacing-small: 0.75rem; // 12px
+	--mw-spacing-medium: 1rem; // 16px
+	--mw-spacing-large: 1.25rem; // 20px
+	--mw-spacing-x-large: 1.5rem; // 24px
+	--mw-spacing-2x-large: 2rem; // 32px
+	--mw-spacing-3x-large: 3rem; // 48px
+	--mw-spacing-4x-large: 4.5rem; // 72px
+	--mw-spacing-underflow: -99999px;
+
+	/* Typography */
+	// Font Family
+	--mw-font-family-serif: "Linux Libertine",
+		// GNU+Linux, alternative to Times New Roman.
+		"Georgia",
+		// Windows, intended as a serif typeface that would appear elegant but
+		// legible printed small or on low-resolution screens.
+		"Times",
+		// Windows, very similar to Times New Roman with subtle differences.
+		serif; // Platform default: 'Times New Roman' on Windows.
+
+	//
+	// Body content uses the user setting in browser / the system default sans-serif font:
+	// Arial on Windows, Roboto on Android.
+	--mw-font-family-sans: sans-serif;
+
+	// Font Size
+	--mw-font-size-2x-small: 0.625rem; // 10px
+	--mw-font-size-x-small: 0.75rem; // 12px
+	--mw-font-size-small: 0.875rem; // 14px
+	--mw-font-size-medium: 1rem; // 16px
+	--mw-font-size-large: 1.25rem; // 20px
+	--mw-font-size-x-large: 1.5rem; // 24px
+	--mw-font-size-2x-large: 2rem; // 32px
+	--mw-font-size-3x-large: 2.5rem; // 40px
+	--mw-font-size-4x-large: 3rem; // 48px
+
+	--mw-font-size-root: 100%;
+	--mw-font-size-reset: 100%;
+	--mw-font-size-base: var(--mw-font-size-small);
+	--mw-font-size-nav-personal: var(--mw-font-size-x-small);
+	--mw-font-size-nav-main: var(--mw-font-size-base);
+	--mw-font-size-nav-main-heading: var(--mw-font-size-x-small);
+	--mw-font-size-nav-main-body: var(--mw-font-size-x-small);
+	--mw-font-size-tabs: var(--mw-font-size-small);
+	--mw-font-size-search-input: var(--mw-font-size-small);
+	--mw-font-size-notification: var(--mw-font-size-x-small);
+	--mw-font-size-site-notice: var(--mw-font-size-x-small);
+	--mw-font-size-footer: var(--mw-font-size-x-small);
+
+	--mw-font-size-heading-1: var(--mw-font-size-2x-large);
+	--mw-font-size-heading-2: var(--mw-font-size-x-large);
+	--mw-font-size-heading-3: var(--mw-font-size-large);
+	--mw-font-size-heading-4: var(--mw-font-size-medium);
+	--mw-font-size-heading-5: var(--mw-font-size-medium);
+	--mw-font-size-heading-6: var(--mw-font-size-medium);
+
+	// Line Height
+	--mw-line-height-denser: 1;
+	--mw-line-height-dense: 1.3;
+	--mw-line-height-normal: 1.6;
+	--mw-line-height-loose: 2;
+
+	--mw-line-height-base: var(--mw-line-height-normal);
+	--mw-line-height-heading: var(--mw-line-height-dense);
+	--mw-line-height-code: var(--mw-line-height-dense);
+	--mw-line-height-footer-info: var(--mw-line-height-dense);
+	--mw-line-height-footer-buttons: var(--mw-line-height-loose);
+	--mw-line-height-nav: 1.125em;
+
+	--mw-shadow-x-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.06);
+	--mw-shadow-small: 0 1px 2px hsla(240, 3.8%, 46.1%, 0.12);
+	--mw-shadow-medium: 0 2px 4px hsla(240, 3.8%, 46.1%, 0.12);
+	--mw-shadow-large: 0 2px 8px hsla(240, 3.8%, 46.1%, 0.12);
+	--mw-shadow-x-large: 0 4px 16px hsla(240, 3.8%, 46.1%, 0.12);
+
+	/* Border Radius */
+	--sl-border-radius-small: 0.125rem; //2px
+	--sl-border-radius-medium: 0.25rem; //4px
+	--sl-border-radius-large: 0.5rem; //8px
+	--sl-border-radius-x-large: 1rem; //16px
+	--sl-border-radius-circle: 50%;
+	--sl-border-radius-pill: 9999px;
+
+	/* Transition */
+	--mw-transition-x-slow: 1000ms;
+	--mw-transition-slow: 500ms;
+	--mw-transition-medium: 250ms;
+	--mw-transition-fast: 150ms;
+	--mw-transition-x-fast: 50ms;
+
+	/* Z-indices */
+	// See skinStyles/jquery.ui/jquery.ui.datepicker.css.
+	// --mw-z-index-ui-datepicker-cover: -1;
+	--mw-z-index-base: 0;
+	--mw-z-index-header: 1;
+	--mw-z-index-sidebar: 1;
+	--mw-z-index-menu-checkbox: 1;
+	--mw-z-index-search-button: 1;
+	// Ensure that this is displayed on top of .mw-body-content and clickable.
+	--mw-z-index-indicators: 1;
+	// See skinStyles/jquery.ui/jquery.ui.slider.css.
+	// --mw-z-index-ui-slider-range: 1;
+	// Menus must overlap indicators (--mw-z-index-indicators)) and VisualEditor toolbar (z-index: 2).
+	--mw-z-index-menu: 2;
+	// See skinStyles/jquery.ui/jquery.ui.slider.css.
+	// --mw-z-index-ui-slider-handle: 2;
+	// Display on top of page tabs (T39158, T50078).
+	--mw-z-index-toc-custom: 10;
+	--mw-z-index-personal: 100;
+	// See skinStyles/jquery.ui/jquery.ui.selectable.css.
+	// --mw-z-index-ui-selectable-helper: 100;
+	--mw-z-index-overlay: 101;
+	--mw-z-index-search-suggestions: 102;
+	--mw-z-index-scroll-to-top: 200;
+	// See skinStyles/jquery.ui/jquery.ui.tooltip.css.
+
+	// Overlay Panels
+	--mw-z-index-panel-backdrop: 999;
+	// Sidebar
+	--mw-z-index-sidebar-panel: 1000;
+	--mw-z-index-sidebar-toggle: 1001;
+	--mw-z-index-sidebar-draw: 1002;
+	// Search
+	--mw-z-index-search-panel: 1010;
+	--mw-z-index-search-toggle: 1011;
+
+	// --mw-z-index-ui-tooltip: 9999;
+
+	/* Dimensions */
+
+	--mw-logo-height: 10rem;
+	--mw-personal-menu-height: 2.5rem;
+	--mw-navigation-height: 2.5rem;
+	--mw-head-height: ~"calc(var(--mw-personal-menu-height) + var(--mw-navigation-height))";
+	--mw-sidebar-width: 10rem;
+	--mw-sidebar-item-height: 2.5em;
+	--mw-spacing-navigation: var(--mw-spacing-x-small);
+	--mw-spacing-main: var(--mw-spacing-large);
+	--mw-personal-icon-size: 2rem;
+	--mw-icon-h2: url("https://static.thbwiki.cc/skin/header/header-life.svg");
+	--mw-icon-h3: url("https://static.thbwiki.cc/skin/header/header-bomb.svg");
+}
+
+.class-color(@name) {
+	@{name} {
+		.color-&-10 {
+			color: ~"var(--mw-color-@{name}-10)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-10)" !important;
+			}
+		}
+		.color-&-30 {
+			color: ~"var(--mw-color-@{name}-30)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-30)" !important;
+			}
+		}
+		.color-&-50 {
+			color: ~"var(--mw-color-@{name}-50)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-50)" !important;
+			}
+		}
+		.color-&-70 {
+			color: ~"var(--mw-color-@{name}-70)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-70)" !important;
+			}
+		}
+		.color-&-90 {
+			color: ~"var(--mw-color-@{name}-90)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-90)" !important;
+			}
+		}
+	}
+}
+
+.class-color-end(@name) {
+	@{name} {
+		.color-&-0 {
+			color: ~"var(--mw-color-@{name}-0)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-0)" !important;
+			}
+		}
+		.color-&-100 {
+			color: ~"var(--mw-color-@{name}-100)" !important;
+			&-hover:hover {
+				color: ~"var(--mw-color-@{name}-100)" !important;
+			}
+		}
+	}
+}
+
+.class-bg-color(@name) {
+	@{name} {
+		.bg-color-&-10 {
+			background-color: ~"var(--mw-color-@{name}-10)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-10)" !important;
+			}
+		}
+		.bg-color-&-30 {
+			background-color: ~"var(--mw-color-@{name}-30)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-30)" !important;
+			}
+		}
+		.bg-color-&-50 {
+			background-color: ~"var(--mw-color-@{name}-50)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-50)" !important;
+			}
+		}
+		.bg-color-&-70 {
+			background-color: ~"var(--mw-color-@{name}-70)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-70)" !important;
+			}
+		}
+		.bg-color-&-90 {
+			background-color: ~"var(--mw-color-@{name}-90)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-90)" !important;
+			}
+		}
+	}
+}
+
+.class-bg-color-end(@name) {
+	@{name} {
+		.bg-color-&-0 {
+			background-color: ~"var(--mw-color-@{name}-0)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-0)" !important;
+			}
+		}
+		.bg-color-&-100 {
+			background-color: ~"var(--mw-color-@{name}-100)" !important;
+			&-hover:hover {
+				background-color: ~"var(--mw-color-@{name}-100)" !important;
+			}
+		}
+	}
+}
+
+.class-bd-color(@name) {
+	@{name} {
+		.bd-color-&-10 {
+			border-color: ~"var(--mw-color-@{name}-10)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-10)" !important;
+			}
+		}
+		.bd-color-&-30 {
+			border-color: ~"var(--mw-color-@{name}-30)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-30)" !important;
+			}
+		}
+		.bd-color-&-50 {
+			border-color: ~"var(--mw-color-@{name}-50)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-50)" !important;
+			}
+		}
+		.bd-color-&-70 {
+			border-color: ~"var(--mw-color-@{name}-70)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-70)" !important;
+			}
+		}
+		.bd-color-&-90 {
+			border-color: ~"var(--mw-color-@{name}-90)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-90)" !important;
+			}
+		}
+	}
+}
+
+.class-bd-color-end(@name) {
+	@{name} {
+		.bd-color-&-0 {
+			border-color: ~"var(--mw-color-@{name}-0)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-0)" !important;
+			}
+		}
+		.bd-color-&-100 {
+			border-color: ~"var(--mw-color-@{name}-100)" !important;
+			&-hover:hover {
+				border-color: ~"var(--mw-color-@{name}-100)" !important;
+			}
+		}
+	}
+}

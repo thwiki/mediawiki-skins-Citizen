@@ -139,6 +139,14 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		if ( $realname !== '' && $realname !== $username ) {
 			$htmlItems = $this->replaceUsernameWithRealName( $htmlItems, $username, $realname );
 		}
+		// [THBWiki] Achievements 会通过 onSkinTemplateNavigation_Universal 把 〈头衔〉
+		// 拼在用户名后面；卡片里改为单独一行显示，这里把同样的后缀从用户名里去掉，避免重复。
+		if ( class_exists( 'Achiev\\AchievementHandler' ) ) {
+			$suffix = \Achiev\AchievementHandler::getUserTitle( $user, true );
+			if ( is_string( $suffix ) && $suffix !== '' ) {
+				$htmlItems = str_replace( $suffix, '', $htmlItems );
+			}
+		}
 
 		$menu = new CitizenComponentMenu( [
 			'id' => 'citizen-user-menu-userpage',
@@ -218,6 +226,52 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		return null;
 	}
 
+	/**
+	 * [THBWiki] 用户卡片头像：优先用站点统一的 avatar.thbwiki.cc 模板（$wgFlowThreadConfig['Avatar']，
+	 * 与讨论板/FlowThread 一致）；配置缺失时退回 SocialProfile 的 wAvatar；都没有则返回 null。
+	 */
+	private function getThbAvatarUrl(): ?string {
+		$user = $this->user;
+		if ( !$user->isRegistered() ) {
+			return null;
+		}
+		$config = \MediaWiki\MediaWikiServices::getInstance()->getMainConfig();
+		$flowThreadConfig = $config->get( 'FlowThreadConfig' );
+		if ( is_array( $flowThreadConfig ) && !empty( $flowThreadConfig['Avatar'] ) ) {
+			return str_replace(
+				[ '${userid}', '${username}' ],
+				[ (string)$user->getId(), $user->getName() ],
+				(string)$flowThreadConfig['Avatar']
+			);
+		}
+		if ( class_exists( 'wAvatar' ) ) {
+			$avatar = new \wAvatar( $user->getId(), 'm' );
+			$url = $avatar->getAvatarURL();
+			if ( is_string( $url ) && $url !== '' ) {
+				return $url;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * [THBWiki] 当前用户选中的成就头衔（纯文本）。
+	 * Achievements 不是必装扩展：类不存在时返回 null，模板里整行不渲染。
+	 */
+	private function getThbAchievementTitle(): ?string {
+		$user = $this->user;
+		if ( !$user->isRegistered() || !class_exists( 'Achiev\\AchievementHandler' ) ) {
+			return null;
+		}
+		$raw = \Achiev\AchievementHandler::getUserTitle( $user, true );
+		if ( !is_string( $raw ) || $raw === '' ) {
+			return null;
+		}
+		// getUserTitle( true ) 返回已带 〈〉 的文本；卡片里单独一行，去掉括号更干净
+		$text = trim( str_replace( [ '〈', '〉' ], '', $raw ) );
+		return $text === '' ? null : $text;
+	}
+
 	public function getTemplateData(): array {
 		$localizer = $this->localizer;
 		$user = $this->user;
@@ -226,6 +280,9 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		if ( $user->isRegistered() ) {
 			$data = [
 				'data-user-page' => $this->getUserPage(),
+				// [THBWiki] 用户卡片：头像 + 成就头衔（扩展不存在时为 null，模板整块不渲染）
+				'thb-avatar' => $this->getThbAvatarUrl(),
+				'thb-achievement' => $this->getThbAchievementTitle(),
 				'data-user-stats' => [
 					'array-stats-items' => [
 						$this->getUserEditCount(),

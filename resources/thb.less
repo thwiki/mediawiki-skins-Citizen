@@ -682,3 +682,41 @@
 ) ) {
 	max-width: none;
 }
+
+/* [THBWiki] Citizen 用户卡片：左侧头像跨两行，右侧「用户名 + 成就头衔」。
+ * 组件样式（UserInfo.less）在本文件之后加载，这里用更高特异性覆盖标题块的字号/内边距。 */
+.citizen-userMenu .citizen-userInfo-title {
+	display: flex;
+	align-items: center;
+	gap: var( --space-sm );
+}
+
+.citizen-userMenu .citizen-userInfo-title > .thb-userInfo__avatar {
+	flex: none;
+	line-height: 0;
+}
+
+.citizen-userMenu .citizen-userInfo-title > .thb-userInfo__avatar img {
+	display: block;
+	inline-size: 48px;
+	block-size: 48px;
+	border-radius: var( --border-radius-circle, 50% );
+	object-fit: cover;
+}
+
+.citizen-userMenu .citizen-userInfo-title > .thb-userInfo__meta {
+	display: flex;
+	flex-direction: column;
+	min-inline-size: 0;
+	padding-block: 0;
+	font: inherit;
+	color: inherit;
+}
+
+.citizen-userMenu .citizen-userInfo-title .thb-userInfo__achiev {
+	margin-block-start: 2px;
+	color: var( --color-subtle );
+	font-size: var( --font-size-small, 0.875rem );
+	font-weight: var( --font-weight-normal, 400 );
+	line-height: 1.3;
+}

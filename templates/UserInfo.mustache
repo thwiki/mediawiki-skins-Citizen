@@ -1,7 +1,12 @@
 <div class="citizen-userInfo">
 	<div class="citizen-userInfo-title">
-		{{#title}}<div>{{.}}</div>{{/title}}
-		{{#data-user-page}}{{>Menu}}{{/data-user-page}}
+		{{! [THBWiki] 头像跨两行：左侧头像、右侧「名字 + 成就头衔」 }}
+		{{#thb-avatar}}<div class="thb-userInfo__avatar"><img src="{{.}}" alt="" width="48" height="48" loading="lazy"></div>{{/thb-avatar}}
+		<div class="thb-userInfo__meta">
+			{{#title}}<div>{{.}}</div>{{/title}}
+			{{#data-user-page}}{{>Menu}}{{/data-user-page}}
+			{{#thb-achievement}}<div class="thb-userInfo__achiev">{{.}}</div>{{/thb-achievement}}
+		</div>
 	</div>
 	<div class="citizen-userInfo-text">
 		{{#text}}<div>{{.}}</div>{{/text}}

@@ -462,88 +462,209 @@
 .class-bd-color( danger );
 
 .bg-color-odd-even {
-	&:nth-child(odd) {
-		background-color: var(--mw-color-neutral-10) !important;
-	}
-	&:nth-child(even) {
-		background-color: var(--mw-color-neutral-30) !important;
-	}
+  &:nth-child(odd) {
+    background-color: var(--mw-color-neutral-10) !important;
+  }
+  &:nth-child(even) {
+    background-color: var(--mw-color-neutral-30) !important;
+  }
 }
 
 /* ── 侧栏菜单（Citizen 抽屉）：MenuSidebar 的结构化输出 ───────────────── */
 .thb-menu {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-	&--sub {
-		padding-inline-start: var( --space-md );
-	}
+  &--sub {
+    padding-inline-start: var(--space-md);
+  }
 }
 
 .thb-submenu {
-	&__summary {
-		display: flex;
-		align-items: center;
-		gap: var( --space-xs );
-		padding-inline-end: var( --space-md );
-		cursor: pointer;
-		list-style: none;
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding-inline-end: var(--space-md);
+    cursor: pointer;
+    list-style: none;
 
-		&::-webkit-details-marker {
-			display: none;
-		}
+    &::-webkit-details-marker {
+      display: none;
+    }
 
-		> a {
-			flex: 1;
-			min-width: 0;
-		}
-	}
+    > a {
+      flex: 1;
+      min-width: 0;
+    }
+  }
 
-	&__chevron {
-		flex: none;
-		inline-size: 0.5rem;
-		block-size: 0.5rem;
-		border-inline-end: 2px solid currentColor;
-		border-block-end: 2px solid currentColor;
-		transform: rotate( 45deg );
-		transition: transform var( --transition-hover );
-	}
+  &__chevron {
+    flex: none;
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-inline-end: 2px solid currentColor;
+    border-block-end: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--transition-hover);
+  }
 
-	&[open] > .thb-submenu__summary .thb-submenu__chevron {
-		transform: rotate( 225deg );
-	}
+  &[open] > .thb-submenu__summary .thb-submenu__chevron {
+    transform: rotate(225deg);
+  }
 }
 
 /* 结构化模式下核心仍会渲染一个空的 <ul>，隐藏掉避免多出空白 */
-.citizen-menu__content > .citizen-menu__content-list:not( :has( li ) ) {
-	display: none;
+.citizen-menu__content > .citizen-menu__content-list:not(:has(li)) {
+  display: none;
 }
 
 /* MenuSidebar 注入的菜单树：纯文本/分组标题与链接行对齐。
  * 分组标题在 <summary> 里，不是 li 的直接子元素，所以两条选择器都要写。 */
 .thb-menu__item > .thb-menu__label,
 .thb-submenu__summary > .thb-menu__label {
-	display: flex;
-	align-items: center;
-	min-block-size: 2.25rem;
-	padding-inline-start: var(--space-md);
-	color: var(--color-base);
+  display: flex;
+  align-items: center;
+  min-block-size: 2.25rem;
+  padding-inline-start: var(--space-md);
+  color: var(--color-base);
 }
 
 .thb-submenu__summary > .thb-menu__label {
-	flex: 1;
-	min-inline-size: 0;
-	padding-inline-end: 0;
+  flex: 1;
+  min-inline-size: 0;
+  padding-inline-end: 0;
 }
 
 /* [THBWiki] 登录用户的头像：替换 Citizen 用户菜单按钮里的通用 userAvatar 图标 */
 .citizen-userMenu .thb-useravatar {
-	display: block;
-	inline-size: var( --size-icon );
-	min-inline-size: var( --size-icon );
-	block-size: var( --size-icon );
-	min-block-size: var( --size-icon );
-	border-radius: 50%;
-	object-fit: cover;
+  display: block;
+  inline-size: var(--size-icon);
+  min-inline-size: var(--size-icon);
+  block-size: var(--size-icon);
+  min-block-size: var(--size-icon);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.disambig-box {
+  display: flex;
+  align-items: center;
+  clear: both;
+  margin: var(--mw-spacing-small) 0;
+  border: var(--mw-border-width-base) solid var(--mw-border-color-content);
+  background: var(--mw-background-color-highlight);
+}
+
+.disambig-box-image {
+  padding: var(--mw-spacing-2x-small) var(--mw-spacing-small);
+}
+
+.disambig-box-text {
+  justify-content: space-between;
+  width: 0;
+  flex: 1 1 0;
+  order: 1;
+  padding: var(--mw-spacing-2x-small) var(--mw-spacing-small);
+}
+
+.mw-body-content table.wikitable > caption {
+  font-weight: bold;
+  border: var(--mw-border-width-base) solid var(--mw-border-color-highlight);
+  background-color: var(--mw-background-color-suppress);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mw-body-content table.wikitable3 {
+  margin: 1em 1em 1em 0;
+  color: var(--mw-color-base);
+  background-color: var(--mw-color-info-10);
+  border: var(--mw-border-width-base) solid var(--mw-color-neutral-50);
+  border-collapse: collapse;
+}
+
+.mw-body-content table.wikitable3 > tr,
+.mw-body-content table.wikitable3 > * > tr {
+  border: var(--mw-border-width-base) solid var(--mw-color-neutral-50);
+}
+
+.mw-body-content table.wikitable3 > tr > th,
+.mw-body-content table.wikitable3 > * > tr > th {
+  border: var(--mw-border-width-base) solid var(--mw-color-neutral-50);
+  background-color: var(--mw-color-info-30);
+  padding: 0.25em;
+  text-align: center;
+}
+
+.mw-body-content table.wikitable3 > tr > td,
+.mw-body-content table.wikitable3 > * > tr > td {
+  border: var(--mw-border-width-base) solid var(--mw-color-neutral-50);
+  padding: 0.25em;
+}
+
+.mw-body-content table.wikitable3 > caption {
+  border: var(--mw-border-width-base) solid var(--mw-color-neutral-50);
+  margin-left: inherit;
+  margin-right: inherit;
+}
+
+.mw-body-content table th.headerSort {
+  border-bottom: var(--mw-border-width-thick) solid var(--mw-color-link-menu);
+}
+
+.mw-body-content table th.headerSortDown {
+  border-bottom-color: var(--mw-color-secondary-50);
+}
+
+.mw-body-content table th.headerSortUp {
+  border-bottom-color: var(--mw-color-primary-50);
+}
+
+// 提取公共的图片路径变量，方便以后统一修改
+@list-url: "@{thb-cdn}/skin/list";
+
+// 提取列表样式的混入（Mixin）
+.list-style(@type, @img) {
+	list-style-type: @type;
+	list-style-image: url("@{list-url}/@{img}.png");
+}
+
+.mw-body-content {
+	// 1. 外部链接图标
+	.external {
+		background-position: center right;
+		background-repeat: no-repeat;
+		background-image: url("@{thb-cdn}/skin/external-link-ltr-icon.svg");
+		padding-right: 13px;
+	}
+
+	// 2. 列表通用默认样式
+	ul {
+		list-style-image: url("@{list-url}/bullet-b.png");
+	}
+
+	// 3. ul 和 li 拥有完全相同的按类名修改样式的逻辑，可以合并处理
+	ul, li {
+		&.b, &.blue {
+			.list-style(disc, bullet-b);
+		}
+
+		&.d, &.disc {
+			.list-style(disc, bullet-d);
+		}
+
+		&.c, &.circle {
+			.list-style(circle, bullet-c);
+		}
+
+		&.s, &.square {
+			.list-style(square, bullet-s);
+		}
+
+		&.x, &.cross {
+			.list-style(square, bullet-x);
+		}
+	}
 }

@@ -668,3 +668,10 @@
 		}
 	}
 }
+/* 曲目列表（Template:同人专辑曲目 → table.musicTable，Common.css 里 width:100%）
+ * Citizen 会把 wikitable 包进 .citizen-overflow-wrapper，并给它 max-width:max-content，
+ * 于是 100% 宽度变成「内容宽度」，右侧留一大片空白。这里对 musicTable 取消收缩。
+ * 只用 skin 层覆盖，不改站点 CSS / 模板。 */
+.citizen-overflow-wrapper:has( > .citizen-overflow-content > table.musicTable ) {
+	max-width: none;
+}

@@ -217,6 +217,7 @@
 				"resources/skins.citizen.scripts/pageTools.js",
 				"resources/skins.citizen.scripts/pageAside.js",
 				"resources/skins.citizen.scripts/preferences.js",
+				"resources/skins.citizen.scripts/scrollNotice.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/sections.js",

@@ -51,6 +51,7 @@ function initBodyContent(
 		{ createSections } = require( './sections.js' ),
 		overflowElements = require( './overflowElements/index.js' ),
 		{ createContentEnhancements } = require( './contentEnhancements.js' ),
+		initCustomScroll = require( './scrollNotice.js' ),
 		config = require( './config.json' );
 
 	// Collapsable sections
@@ -62,6 +63,9 @@ function initBodyContent(
 	} );
 	// Content enhancements
 	createContentEnhancements( { document, bodyContent } ).init();
+
+	// scroll notice init
+	initCustomScroll( bodyContent );
 }
 
 /**

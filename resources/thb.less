@@ -152,6 +152,12 @@
     border-left-color: #fad67d;
     .bg-image(sandbox);
 
+    // 移动端隐藏提示框里的装饰图，避免占掉正文宽度（宽屏保留）
+    @media ( max-width: @max-width-breakpoint-mobile ) {
+      img {
+        display: none;
+      }
+    }
   }
   &.smw {
     max-width: max-content;
@@ -666,6 +672,12 @@
       .list-style(square, bullet-x);
     }
   }
+}
+
+.search-types ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /* 站点 Common.css 里声明 width:100% 的表格（作品信息、曲目列表、Staff、翻译表、

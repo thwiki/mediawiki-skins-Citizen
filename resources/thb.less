@@ -773,3 +773,15 @@
     }
   }
 }
+
+/* [THBWiki] 链接下划线：默认（“皮肤或浏览器默认”）不显示下划线，悬停也不加。
+ * 用户在外观设置里选“始终”时，核心给 <body> 加 mw-underline-always，仍然显示下划线；
+ * 选“从不”时核心加 mw-underline-never，原本就是无下划线。 */
+.mw-body a:hover {
+  text-decoration: none;
+}
+
+.mw-underline-always a,
+.mw-underline-always a:hover {
+  text-decoration: underline;
+}

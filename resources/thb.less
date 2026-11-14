@@ -749,3 +749,27 @@
   inset: 0;
   border-radius: var(--border-radius-base);
 }
+
+/* [THBWiki] 深色模式下把“黑色”文字提亮。
+ * {{color:black}} / {{color:#000}} / {{color:#000000}} 会生成 .color-black /
+ * .color-h000 / .color-h000000，但颜色写在 inline style 里，所以必须 !important。
+ * 深色正文底是 hsl(210,5%,25%)（#3d4043）：纯黑对比度约 2:1，#b0b0b0 约 4.8:1，
+ * 既保留“比正文更暗”的观感，又能读清。 */
+:root.skin-theme-clientpref-night {
+  .color-black,
+  .color-h000,
+  .color-h000000 {
+    color: #b0b0b0 !important;
+  }
+}
+
+/* 跟随系统：只有系统深色且用户选了 os 时生效 */
+@media (prefers-color-scheme: dark) {
+  :root.skin-theme-clientpref-os {
+    .color-black,
+    .color-h000,
+    .color-h000000 {
+      color: #b0b0b0 !important;
+    }
+  }
+}

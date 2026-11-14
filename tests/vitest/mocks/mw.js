@@ -95,6 +95,28 @@ const mw = {
 	language: {
 		convertNumber: vi.fn( ( n ) => String( n ) )
 	},
+	Title: {
+		newFromText: vi.fn( ( text, namespace ) => {
+			if ( text === null || text === undefined || text === '' ) {
+				return null;
+			}
+			let title = String( text );
+			const match = /^([^:]+):(.*)$/.exec( title );
+			if ( match && match[ 1 ].toLowerCase() === 'category' ) {
+				title = match[ 2 ];
+			}
+			return {
+				namespace: namespace === undefined ? 0 : namespace,
+				getMainText: () => title,
+				getPrefixedText: () => 'Category:' + title
+			};
+		} ),
+		makeTitle: vi.fn( ( namespace, text ) => ( {
+			namespace,
+			getMainText: () => String( text ),
+			getPrefixedText: () => 'Category:' + String( text )
+		} ) )
+	},
 	log: {
 		error: vi.fn(),
 		warn: vi.fn()

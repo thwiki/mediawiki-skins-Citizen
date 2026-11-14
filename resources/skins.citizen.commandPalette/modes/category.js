@@ -19,38 +19,48 @@ const CATEGORY_NS_ID = 14;
 const CATEGORY_NS_NAME = 'Category';
 
 /**
- * Strip the "Category:" prefix from a title.
+ * Normalize a category title (bare, localized or canonical) into a
+ * mw.Title instance in the Category namespace.
  *
- * @param {string} title
- * @return {string}
+ * @param {string} value
+ * @return {mw.Title|null}
  */
-function stripPrefix( title ) {
-	if ( !title ) {
-		return '';
+function normalizeCategoryTitle( value ) {
+	const text = String( value || '' ).trim();
+	if ( !text ) {
+		return null;
 	}
-	const prefix = CATEGORY_NS_NAME + ':';
-	return title.startsWith( prefix ) ? title.slice( prefix.length ) : title;
+	try {
+		return mw.Title.newFromText( text, CATEGORY_NS_ID ) ||
+			mw.Title.makeTitle( CATEGORY_NS_ID, text );
+	} catch ( error ) {
+		return null;
+	}
 }
 
 /**
  * Build a CommandPaletteItem for a category result (drillable).
  *
- * @param {string} bareTitle Title without the Category: prefix.
+ * @param {string} title Category title, with or without the local prefix.
  * @return {Object}
  */
-function adaptCategoryItem( bareTitle ) {
+function adaptCategoryItem( title ) {
 	// No url is set on category results: drilling, not navigation, is the
 	// primary action. Setting url would render the item as an <a> tag and
 	// the browser would follow it on mouse click before the Vue handler
 	// could fire pushModeContext. The "view" action below restores the
 	// path to the actual Category: page.
-	const categoryTitle = CATEGORY_NS_NAME + ':' + bareTitle;
+	const titleObj = normalizeCategoryTitle( title );
+	const bareTitle = titleObj ? titleObj.getMainText() : String( title || '' );
+	const categoryTitle = titleObj ?
+		titleObj.getPrefixedText() :
+		CATEGORY_NS_NAME + ':' + bareTitle;
 	return {
 		id: 'citizen-command-palette-item-category-' + bareTitle,
 		thumbnailIcon: cdxIconTag,
 		type: 'category',
 		label: bareTitle,
-		value: bareTitle,
+		value: categoryTitle,
 		highlightQuery: true,
 		actions: [
 			{
@@ -141,7 +151,7 @@ function createCategoryMode( ApiConstructor ) {
 			}, { signal } );
 
 			const hits = data?.query?.prefixsearch || [];
-			return hits.map( ( hit ) => adaptCategoryItem( stripPrefix( hit.title ) ) );
+			return hits.map( ( hit ) => adaptCategoryItem( hit.title ) );
 		} catch ( error ) {
 			if ( isAbortError( error ) ) {
 				return [];
@@ -151,14 +161,16 @@ function createCategoryMode( ApiConstructor ) {
 		}
 	}
 
-	async function fetchMembers( bareTitle, signal ) {
+	async function fetchMembers( categoryTitle, signal ) {
 		const api = new ApiConstructor();
+		const titleObj = normalizeCategoryTitle( categoryTitle );
+		const cmtitle = titleObj ? titleObj.getPrefixedText() : categoryTitle;
 		try {
 			const data = await api.get( {
 				action: 'query',
 				format: 'json',
 				list: 'categorymembers',
-				cmtitle: CATEGORY_NS_NAME + ':' + bareTitle,
+				cmtitle: cmtitle,
 				cmtype: 'subcat|page',
 				cmlimit: 50,
 				maxage: config.wgSearchSuggestCacheExpiry,
@@ -170,7 +182,7 @@ function createCategoryMode( ApiConstructor ) {
 			const pages = [];
 			members.forEach( ( m ) => {
 				if ( m.ns === CATEGORY_NS_ID ) {
-					subcats.push( adaptCategoryItem( stripPrefix( m.title ) ) );
+					subcats.push( adaptCategoryItem( m.title ) );
 				} else {
 					pages.push( adaptPageItem( m ) );
 				}

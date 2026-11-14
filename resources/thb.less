@@ -151,6 +151,7 @@
     max-width: max-content;
     border-left-color: #fad67d;
     .bg-image(sandbox);
+
   }
   &.smw {
     max-width: max-content;
@@ -627,110 +628,112 @@
 
 // 提取列表样式的混入（Mixin）
 .list-style(@type, @img) {
-	list-style-type: @type;
-	list-style-image: url("@{list-url}/@{img}.png");
+  list-style-type: @type;
+  list-style-image: url("@{list-url}/@{img}.png");
 }
 
 .mw-body-content {
-	// 1. 外部链接图标
-	.external {
-		background-position: center right;
-		background-repeat: no-repeat;
-		background-image: url("@{thb-cdn}/skin/external-link-ltr-icon.svg");
-		padding-right: 13px;
-	}
+  // 列表通用默认样式
+  ul {
+    list-style-image: url("@{list-url}/bullet-b.png");
+  }
 
-	// 2. 列表通用默认样式
-	ul {
-		list-style-image: url("@{list-url}/bullet-b.png");
-	}
+  // ul 和 li 拥有完全相同的按类名修改样式的逻辑，可以合并处理
+  ul,
+  li {
+    &.b,
+    &.blue {
+      .list-style(disc, bullet-b);
+    }
 
-	// 3. ul 和 li 拥有完全相同的按类名修改样式的逻辑，可以合并处理
-	ul, li {
-		&.b, &.blue {
-			.list-style(disc, bullet-b);
-		}
+    &.d,
+    &.disc {
+      .list-style(disc, bullet-d);
+    }
 
-		&.d, &.disc {
-			.list-style(disc, bullet-d);
-		}
+    &.c,
+    &.circle {
+      .list-style(circle, bullet-c);
+    }
 
-		&.c, &.circle {
-			.list-style(circle, bullet-c);
-		}
+    &.s,
+    &.square {
+      .list-style(square, bullet-s);
+    }
 
-		&.s, &.square {
-			.list-style(square, bullet-s);
-		}
-
-		&.x, &.cross {
-			.list-style(square, bullet-x);
-		}
-	}
+    &.x,
+    &.cross {
+      .list-style(square, bullet-x);
+    }
+  }
 }
+
 /* 站点 Common.css 里声明 width:100% 的表格（作品信息、曲目列表、Staff、翻译表、
  * 导航盒等），在 Citizen 的 overflow 包装里会因 wrapper 的 max-width:max-content
  * 被收窄成「内容宽度」，右侧留白。这里对这些表格取消收缩，100% 会按内容列解析。
  * 只用 skin 层覆盖，不改站点 CSS / 模板；普通 wikitable 仍保持 Citizen 的收缩行为。 */
-.citizen-overflow-wrapper:has( > .citizen-overflow-content > :is(
-	table.doujininfo,
-	table.doujinworklist,
-	table.musicTable,
-	table.stafflist,
-	table.tt-table,
-	table.navbox
-) ) {
-	max-width: none;
+.citizen-overflow-wrapper:has(
+  > .citizen-overflow-content
+    > :is(
+      table.doujininfo,
+      table.doujinworklist,
+      table.musicTable,
+      table.stafflist,
+      table.tt-table,
+      table.navbox
+    )
+) {
+  max-width: none;
 }
 
 /* [THBWiki] Citizen 用户卡片：左侧头像跨两行，右侧「用户名 + 成就头衔」。
  * 组件样式（UserInfo.less）在本文件之后加载，这里用更高特异性覆盖标题块的字号/内边距。 */
 .citizen-userMenu .citizen-userInfo-title {
-	display: flex;
-	align-items: center;
-	gap: var( --space-sm );
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
 }
 
 .citizen-userMenu .citizen-userInfo-title > .thb-userInfo__avatar {
-	flex: none;
-	line-height: 0;
+  flex: none;
+  line-height: 0;
 }
 
 .citizen-userMenu .citizen-userInfo-title > .thb-userInfo__avatar img {
-	display: block;
-	inline-size: 48px;
-	block-size: 48px;
-	border-radius: var( --border-radius-circle, 50% );
-	object-fit: cover;
+  display: block;
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: var(--border-radius-circle, 50%);
+  object-fit: cover;
 }
 
 .citizen-userMenu .citizen-userInfo-title > .thb-userInfo__meta {
-	display: flex;
-	flex-direction: column;
-	min-inline-size: 0;
-	padding-block: 0;
-	font: inherit;
-	color: inherit;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  padding-block: 0;
+  font: inherit;
+  color: inherit;
 }
 
 .citizen-userMenu .citizen-userInfo-title .thb-userInfo__achiev {
-	margin-block-start: 2px;
-	color: var( --color-subtle );
-	font-size: var( --font-size-small, 0.875rem );
-	font-weight: var( --font-weight-normal, 400 );
-	line-height: 1.3;
+  margin-block-start: 2px;
+  color: var(--color-subtle);
+  font-size: var(--font-size-small, 0.875rem);
+  font-weight: var(--font-weight-normal, 400);
+  line-height: 1.3;
 }
 
 /* [THBWiki] 头像 / 名字 / 头衔整块都可点击：把链接的命中区域扩到整个标题块。
  * 标题块建立包含块，链接的 ::after 用 inset: 0 覆盖头像与头衔行；
  * 链接文本仍是用户名，键盘与读屏语义不变。 */
 .citizen-userMenu .citizen-userInfo-title {
-	position: relative;
+  position: relative;
 }
 
 .citizen-userMenu .citizen-userInfo-title nav.citizen-menu a[href]::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	border-radius: var( --border-radius-base );
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-base);
 }

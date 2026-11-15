@@ -230,7 +230,12 @@ function createCategoryMode( ApiConstructor ) {
 			return null;
 		}
 		const root = mw.message( 'citizen-command-palette-mode-category-breadcrumb-root' ).text();
-		const segments = [ root ].concat( modeContext.map( ( c ) => c.title ) );
+		// Show the bare title in the breadcrumb; context entries keep the
+		// prefixed title so drilling and URL building stay namespace aware.
+		const segments = [ root ].concat( modeContext.map( ( c ) => {
+			const title = normalizeCategoryTitle( c.title );
+			return title ? title.getMainText() : c.title;
+		} ) );
 		return segments.join( ' / ' );
 	}
 

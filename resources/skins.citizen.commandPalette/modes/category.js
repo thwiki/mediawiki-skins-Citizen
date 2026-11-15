@@ -16,6 +16,12 @@ const config = require( '../config.json' );
 const { defineMode } = require( '../services/defineMode.js' );
 
 const CATEGORY_NS_ID = 14;
+
+// Paginate categorymembers so client-side filtering can see more than the
+// first page. The API has no title filter, so this is the only way to search
+// further inside a category.
+const MEMBER_PAGE_SIZE = 500;
+const MEMBER_MAX_PAGES = 4;
 const CATEGORY_NS_NAME = 'Category';
 
 /**
@@ -105,18 +111,18 @@ function adaptPageItem( apiPage ) {
 }
 
 /**
- * Filter results client-side by case-insensitive title prefix.
+ * Filter results client-side by case-insensitive title substring.
  *
  * @param {Array<Object>} items
  * @param {string} subQuery
  * @return {Array<Object>}
  */
-function filterByPrefix( items, subQuery ) {
+function filterByQuery( items, subQuery ) {
 	if ( !subQuery ) {
 		return items;
 	}
 	const lower = subQuery.toLowerCase();
-	return items.filter( ( item ) => item.label.toLowerCase().startsWith( lower ) );
+	return items.filter( ( item ) => item.label.toLowerCase().includes( lower ) );
 }
 
 /**
@@ -136,6 +142,7 @@ function getCurrentPageCategoryItems() {
  * @return {Object}
  */
 function createCategoryMode( ApiConstructor ) {
+	const membersCache = new Map();
 	async function searchCategories( subQuery, signal ) {
 		const api = new ApiConstructor();
 		try {
@@ -161,40 +168,70 @@ function createCategoryMode( ApiConstructor ) {
 		}
 	}
 
-	async function fetchMembers( categoryTitle, signal ) {
+	async function fetchMembers( categoryTitle, signal, maxPages = 1 ) {
 		const api = new ApiConstructor();
 		const titleObj = normalizeCategoryTitle( categoryTitle );
 		const cmtitle = titleObj ? titleObj.getPrefixedText() : categoryTitle;
-		try {
-			const data = await api.get( {
-				action: 'query',
-				format: 'json',
-				list: 'categorymembers',
-				cmtitle: cmtitle,
-				cmtype: 'subcat|page',
-				cmlimit: 50,
-				maxage: config.wgSearchSuggestCacheExpiry,
-				smaxage: config.wgSearchSuggestCacheExpiry
-			}, { signal } );
-
-			const members = data?.query?.categorymembers || [];
-			const subcats = [];
-			const pages = [];
-			members.forEach( ( m ) => {
-				if ( m.ns === CATEGORY_NS_ID ) {
-					subcats.push( adaptCategoryItem( m.title ) );
-				} else {
-					pages.push( adaptPageItem( m ) );
-				}
-			} );
-			return subcats.concat( pages );
-		} catch ( error ) {
-			if ( isAbortError( error ) ) {
-				return [];
-			}
-			mw.log.error( '[commandPalette] Category members fetch failed:', error );
-			return [];
+		let entry = membersCache.get( cmtitle );
+		if ( !entry ) {
+			entry = { items: [], continueToken: undefined, pages: 0, pending: null };
+			membersCache.set( cmtitle, entry );
 		}
+		// Collapse concurrent calls (the palette may resolve the same mode
+		// twice) onto one in-flight request chain.
+		if ( entry.pending ) {
+			await entry.pending.catch( () => {} );
+		}
+		if ( entry.pages > 0 && ( !entry.continueToken || entry.pages >= maxPages ) ) {
+			return entry.items;
+		}
+		entry.pending = ( async () => {
+			for ( let i = entry.pages; i < maxPages; i++ ) {
+				if ( entry.pages > 0 && !entry.continueToken ) {
+					break;
+				}
+				const params = {
+					action: 'query',
+					format: 'json',
+					list: 'categorymembers',
+					cmtitle: cmtitle,
+					cmtype: 'subcat|page',
+					cmlimit: MEMBER_PAGE_SIZE,
+					maxage: config.wgSearchSuggestCacheExpiry,
+					smaxage: config.wgSearchSuggestCacheExpiry
+				};
+				if ( entry.continueToken ) {
+					params.cmcontinue = entry.continueToken;
+				}
+				const data = await api.get( params, { signal } );
+				const members = data?.query?.categorymembers || [];
+				members.forEach( ( m ) => {
+					entry.items.push( m.ns === CATEGORY_NS_ID ?
+						adaptCategoryItem( m.title ) :
+						adaptPageItem( m ) );
+				} );
+				entry.continueToken = data?.continue?.cmcontinue;
+				entry.pages += 1;
+			}
+		} )();
+		try {
+			await entry.pending;
+		} catch ( error ) {
+			if ( !isAbortError( error ) ) {
+				mw.log.error( '[commandPalette] Category members fetch failed:', error );
+			}
+		} finally {
+			entry.pending = null;
+		}
+		// Keep subcategories before pages, mirroring the API ordering.
+		entry.items.sort( ( a, b ) => ( a.type === 'category' ? 0 : 1 ) - ( b.type === 'category' ? 0 : 1 ) );
+		return entry.items;
+	}
+	function hasMoreMembers( categoryTitle ) {
+		const titleObj = normalizeCategoryTitle( categoryTitle );
+		const cmtitle = titleObj ? titleObj.getPrefixedText() : categoryTitle;
+		const entry = membersCache.get( cmtitle );
+		return !!( entry && entry.continueToken );
 	}
 
 	async function getResults( subQuery, signal, _tokens, modeContext ) {
@@ -209,7 +246,19 @@ function createCategoryMode( ApiConstructor ) {
 		}
 
 		const members = await fetchMembers( drilled.title, signal );
-		return filterByPrefix( members, subQuery );
+		if ( !subQuery ) {
+			return members;
+		}
+		let results = filterByQuery( members, subQuery );
+		let pages = 1;
+		// The API cannot filter by title; keep paging while the query has no
+		// match and the category has more members.
+		while ( results.length === 0 && pages < MEMBER_MAX_PAGES && hasMoreMembers( drilled.title ) ) {
+			await fetchMembers( drilled.title, signal, pages + 1 );
+			results = filterByQuery( members, subQuery );
+			pages += 1;
+		}
+		return results;
 	}
 
 	function onResultSelect( item ) {

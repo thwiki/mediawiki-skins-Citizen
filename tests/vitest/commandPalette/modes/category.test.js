@@ -158,7 +158,7 @@ describe( 'category mode', () => {
 			expect( mockGet.mock.calls[ 0 ][ 0 ].cmtitle ).toBe( 'Category:Mammals' );
 		} );
 
-		it( 'filters drilled results client-side by case-insensitive prefix', async () => {
+		it( 'filters drilled results client-side by case-insensitive substring', async () => {
 			mockGet.mockResolvedValue( {
 				query: { categorymembers: [
 					{ ns: 14, title: 'Category:Cats' },

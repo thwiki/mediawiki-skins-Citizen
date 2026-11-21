@@ -31,6 +31,12 @@ class SkinHooks implements
 	 * MediaWiki:Sidebar. They must never be picked as the site tools menu.
 	 */
 	private const MAGIC_PORTLETS = [ 'SEARCH', 'TOOLBOX', 'LANGUAGES' ];
+	/**
+	 * Sidebar menu that holds the site-wide tools (upload file, special pages).
+	 * The tools are grouped here instead of being appended to the first menu.
+	 */
+	public const SITE_TOOLS_MENU_ID = '站点工具';
+
 
 	private static ?string $inlineScript = null;
 
@@ -152,19 +158,48 @@ class SkinHooks implements
 	 * an absent entry means the menu must stay without an upload link.
 	 */
 	private static function moveUploadToSiteTools( Skin $skin, array &$sidebar ): void {
-		$item = $sidebar['TOOLBOX']['upload'] ?? null;
+		$upload = $sidebar['TOOLBOX']['upload'] ?? null;
+		$specialpages = $sidebar['TOOLBOX']['specialpages'] ?? null;
 
-		if ( $item === null ) {
+		if ( $upload === null && $specialpages === null ) {
 			return;
 		}
 
-		unset( $sidebar['TOOLBOX']['upload'] );
+		unset( $sidebar['TOOLBOX']['upload'], $sidebar['TOOLBOX']['specialpages'] );
 
-		$item['msg'] = 'upload';
-		$item['icon'] = 'upload';
-		$item['link-html'] = MenuItemDecorator::getIconHtml( 'upload' );
+		// [thwiki] 上传文件与特殊页面合并进专用菜单，放在原 TOOLBOX（侧栏“工具”）的位置
+		$menuId = self::getSiteToolsMenuId( $skin, $sidebar );
+		if ( !isset( $sidebar[$menuId] ) ) {
+			$newBar = [];
+			foreach ( $sidebar as $key => $value ) {
+				if ( $key === 'TOOLBOX' ) {
+					$newBar[$menuId] = [];
+				}
+				$newBar[$key] = $value;
+			}
+			if ( !isset( $newBar[$menuId] ) ) {
+				$newBar[$menuId] = [];
+			}
+			$sidebar = $newBar;
+		}
 
-		$sidebar[self::getSiteToolsMenuId( $skin, $sidebar )][] = $item;
+		$items = [];
+		if ( $upload !== null ) {
+			$upload['msg'] = 'upload';
+			$upload['icon'] = 'upload';
+			$upload['link-html'] = MenuItemDecorator::getIconHtml( 'upload' );
+			$items['upload'] = $upload;
+		}
+		if ( $specialpages !== null ) {
+			$specialpages['msg'] = 'specialpages';
+			$specialpages['icon'] = 'specialPages';
+			$specialpages['link-html'] = MenuItemDecorator::getIconHtml( 'specialPages' );
+			$items['specialpages'] = $specialpages;
+		}
+
+		foreach ( $items as $key => $value ) {
+			$sidebar[$menuId][$key] = $value;
+		}
 	}
 
 	/**
@@ -183,13 +218,8 @@ class SkinHooks implements
 				: $customSiteToolsMenuId;
 		}
 
-		foreach ( array_keys( $bar ) as $key ) {
-			if ( !in_array( $key, self::MAGIC_PORTLETS, true ) ) {
-				return (string)$key;
-			}
-		}
-
-		return 'navigation';
+		// [thwiki] 未配置时用专用菜单，而不是追加到第一个非 magic 门户（会插到“常用”最前面）
+		return self::SITE_TOOLS_MENU_ID;
 	}
 
 	/**
